@@ -1,0 +1,13 @@
+/* 0. (Two arguments) Increment and jump to L_{i}
+ * 1. If R > 0, decrement and jump to L{i} otherwise jump to L{j}
+ * Halt
+ * Program saved as instruction number, register number, instructions
+ */
+
+0, 0, 1, 2
+
+0, 1, 1, 2
+1, 0, 0
+2, 2, 3, 4
+3, 0, 2
+4
