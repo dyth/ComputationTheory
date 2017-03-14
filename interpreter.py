@@ -1,20 +1,52 @@
 #!/usr/bin/env python
 """python interpreter for a register machine"""
-import csv
-# instruction number, register number, instructions to register
+import csv, sys, re
 
 
-def toList(line):
-    'string into integer list'
+def readFile(name):
+    'return string read from file name'
+    name = open(name, 'r')
+    lines = name.read()
+    name.close()
+    return lines
+
+
+def toIntList(line):
+    'convert string into int list'
     rule = []
     line = line.split(',')
-    for item in line:
-        rule.append(int(item))
+    rule = [int(l) for l in line]
     return rule
+
+
+def tokenize(lines):
+    'tokenize lines'
+    # remove layout characters
+    lines = lines.replace(' ', '')
+    lines = lines.replace('\n', '')
+    # remove comments
+    lines = re.sub("/.*/", '', lines)
+    # split into lines and remove last null string
+    lines = lines.split(';')
+    lines = lines[:-1]
+    # convert strings into an integer format
+    lines = [toIntList(l) for l in lines]
+    return lines
+
+
+def parse(tokens):
+    'parse tokens and return list of rules'
+    tokens = tokens[1:]
+    # sort rules by first element, such that they are indexed
+    # by list position rather than by first index
+    tokens = sorted(tokens)
+    rules = [t[1:] for t in tokens]
+    return rules
 
 
 def rule0(rule, configuration):
     'operates rule1 on configuration'
+    # increment and then move to instruction pointed by rule[1]
     configuration[1] += 1
     configuration[0] = rule[1]
     return configuration
@@ -22,32 +54,42 @@ def rule0(rule, configuration):
 
 def rule1(rule, configuration):
     'operates rule2 on configuration'
-    if (configuration[rule[0]+1] > 0):
-        configuration[rule[0]+1] -= 1
+    # if greater than zero, decrement and then move to
+    # instruction pointed by rule[1], otherwise move to
+    # intruction pointed by rule[2]
+    index = rule[0] + 1
+    if (configuration[index] > 0):
+        configuration[index] -= 1
         configuration[0] = rule[1]
     else:
         configuration[0] = rule[2]
     return configuration
 
 
-configuration, rules = None, []
+def compute(rule, configuration):
+    'do a computation'
+    # length of rule changes action of which rule to apply
+    length = len(rule)
+    if (length == 2):
+        configuration = rule0(rule, configuration)
+    elif (length == 3):
+        configuration = rule1(rule, configuration)
+    else:
+        configuration = "HALT"
+    return configuration
 
-openfile = open('register').read().replace(" ", "").split('\n')
-for line in openfile:
-    if ('*' not in line) and (line != ""):
-            if (configuration == None):
-                configuration = toList(line)
-            else:
-                rules.append(toList(line)[1:])
 
+# parse rules and starting configuration from file
+name = str(sys.argv[1])
+lines = readFile(name)
+tokens = tokenize(lines)
+rules = parse(tokens)
+# starting configuration is given by first entry in list
+configuration = tokens[0]
 
-while True:
+# while there is still a computation, do it
+while (configuration != "HALT"):
     print configuration
     number = configuration[0]
-    if (len(rules[number]) == 3):
-        configuration = rule1(rules[number], configuration)
-    elif (len(rules[number]) == 2):
-        configuration = rule0(rules[number], configuration)
-    else:
-        print "HALT"
-        break
+    rule = rules[number]
+    configuration = compute(rule, configuration)
