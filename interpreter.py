@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""interpreter of a register machine for register.soph"""
+"""python interpreter for a register machine"""
 import csv
 # instruction number, register number, instructions to register
 
 
 def toList(line):
-    'converts a string into an integer list'
+    'string into integer list'
     rule = []
     line = line.split(',')
     for item in line:
@@ -32,7 +32,7 @@ def rule1(rule, configuration):
 
 configuration, rules = None, []
 
-openfile = open('register.soph').read().replace(" ", "").split('\n')
+openfile = open('register').read().replace(" ", "").split('\n')
 for line in openfile:
     if ('*' not in line) and (line != ""):
             if (configuration == None):
