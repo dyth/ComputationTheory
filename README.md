@@ -1,12 +1,11 @@
 # Computation Theory
 
-Implementations of Register Machines and Turing Machines
+Implementations of theoretical computation models
 
-* `register` -- file in which configurations of register machine data are stored. Comments are supported by placing them inside the escapement characters /* */? A register machine has two types of instructions:
-  * Increment register, then jump to instruction.
-  * Decrement register if > 0, then jump to instruction. Otherwise just jump to other instruction.
-  Data is stored in the format instruction number; register to change; next instruction(s)
+* `register` -- file storing initial configuration and rules of a register machine. Comments written within `/* */`? A register machine has two different types of instructions:
+  * Increment register value, then jump to instruction.
+  * Decrement register value if > 0, then jump to instruction. Otherwise just jump to other instruction.
+  
+  Data is stored in (instructionNumber; indexOfRegisterToChange; nextInstruction; optionalOtherNextInstruction)
 
-* `interpreter.py` -- interpreter which reads register.soph
-
-* `encoder.py` -- (in progress) encodes and decodes register machine instructions into a number.
+* `interpreter.py` -- a python interpreter. Run using `$ python interpreter.py <name>`
