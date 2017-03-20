@@ -1,10 +1,10 @@
 ### Starting build.
-# Target: interpreter.ml.depends, tags: { extension:ml, file:interpreter.ml, ocaml, ocamldep, package(Extlib), quiet, thread }
-ocamlfind ocamldep -package Extlib -modules interpreter.ml > interpreter.ml.depends
-# Target: interpreter.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:interpreter.cmo, file:interpreter.ml, implem, ocaml, package(Extlib), quiet, thread }
-ocamlfind ocamlc -c -thread -package Extlib -o interpreter.cmo interpreter.ml
-# Target: interpreter.cmx, tags: { compile, extension:cmx, extension:ml, file:interpreter.cmx, file:interpreter.ml, implem, native, ocaml, package(Extlib), quiet, thread }
-ocamlfind ocamlopt -c -thread -package Extlib -o interpreter.cmx interpreter.ml
-# Target: interpreter.native, tags: { dont_link_with, extension:native, file:interpreter.native, link, native, ocaml, package(Extlib), program, quiet, thread }
-ocamlfind ocamlopt -linkpkg -thread -package Extlib interpreter.cmx -o interpreter.native
-# Compilation successful.
+# Target: interpreter.ml.depends, tags: { annot, bin_annot, debug, extension:ml, file:interpreter.ml, ocaml, ocamldep, package(bin_prot.syntax), package(core), package(sexplib.syntax,comparelib.syntax,fieldslib.syntax,variantslib.syntax), quiet, short_paths, syntax(camlp4o), thread }
+ocamlfind ocamldep -syntax camlp4o -package bin_prot.syntax -package sexplib.syntax,comparelib.syntax,fieldslib.syntax,variantslib.syntax -package core -modules interpreter.ml > interpreter.ml.depends
+# Target: interpreter.cmo, tags: { annot, bin_annot, byte, compile, debug, extension:cmo, extension:ml, file:interpreter.cmo, file:interpreter.ml, implem, ocaml, package(bin_prot.syntax), package(core), package(sexplib.syntax,comparelib.syntax,fieldslib.syntax,variantslib.syntax), quiet, short_paths, syntax(camlp4o), thread }
+ocamlfind ocamlc -c -w A-4-33-40-41-42-43-34-44 -strict-sequence -g -annot -bin-annot -short-paths -thread -syntax camlp4o -package bin_prot.syntax -package sexplib.syntax,comparelib.syntax,fieldslib.syntax,variantslib.syntax -package core -o interpreter.cmo interpreter.ml
++ ocamlfind ocamlc -c -w A-4-33-40-41-42-43-34-44 -strict-sequence -g -annot -bin-annot -short-paths -thread -syntax camlp4o -package bin_prot.syntax -package sexplib.syntax,comparelib.syntax,fieldslib.syntax,variantslib.syntax -package core -o interpreter.cmo interpreter.ml
+File "interpreter.ml", line 11, characters 4-18:
+Error: Unbound module Std
+Command exited with code 2.
+# Compilation unsuccessful.

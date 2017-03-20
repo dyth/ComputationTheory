@@ -1,3 +1,5 @@
+open Core.Std
+
 let add x = x + 1;;
 
 let x = add 3;;

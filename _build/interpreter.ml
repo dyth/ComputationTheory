@@ -1,3 +1,5 @@
+open Core.Std
+
 let add x = x + 1;;
 
 let x = add 3;;
@@ -10,4 +12,4 @@ let read name =
   
 let file = read "register";;
   
-List.map (Printf.printf "%s") file;;
+List.map (Printf.printf "%s\n") file;;
