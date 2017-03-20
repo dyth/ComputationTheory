@@ -1,0 +1,5 @@
+"Rule: ocaml dependencies ml (%=interpreter )": "\022\003Ùï×\n~:\157«öj¬\"\1298"
+"Rule: ocaml: ml & cmi -> cmx & o (%=interpreter )": "ä[$£St2?â\t\147öò[\133¼"
+"Resource: /Users/dyth/Documents/6_SecondYear/computationTheory/interpreter.ml": "Qsñ\015Í£H1=cbÇà¡U\131"
+"Rule: ocaml: cmx* & o* -> native (%=interpreter )": "\023d*§*vê á\142»qcµ\1355"
+"Rule: ocaml: ml -> cmo & cmi (%=interpreter )": "«k>£uø\131\154\005mb\002ñY8¹"

@@ -10,4 +10,4 @@ let read name =
   
 let file = read "register";;
   
-List.map (Printf.printf "%s\n") file;;
+List.map (Printf.printf "%s") file;;
