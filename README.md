@@ -13,5 +13,5 @@ Implementations of theoretical computation models, combining the course Computat
 
 * `interpreterRegister.py`: a python interpreter for register machines. Run using `$ python interpreter.py <name>`
 
-* `interpreterLambda.py`: an OCaML interpreter for lambda calculus -- specifically `lambda`, the . Compiled using `$ ocamlbuild -tag thread -use-ocamlfind -pkg Extlib 'interpreterLambda.{native|byte}'`, with `native` or `byte` varying depending on which version of code the user wishes to compiles to. This creates an executable file. The following libraries were installed using opam:
+* `interpreterLambda.py`: an OCaML interpreter for lambda calculus -- specifically `lambda`. Compiled using `$ ocamlbuild -tag thread -use-ocamlfind -pkg Extlib 'interpreterLambda.{native|byte}'`, with `native` or `byte` varying depending on which version of code the user wishes to compiles to. This creates an executable file. The following libraries were installed using opam:
   * Core.Std
