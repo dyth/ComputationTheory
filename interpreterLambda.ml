@@ -4,8 +4,8 @@ type token = Lambda | Dot | LPar | RPar | Var of string;;
   
 (*read the file <name> and create a string list delimited by '\n'*)
 let read name =
-  let chan = open_in name
-  in Std.input_list (chan)
+  let chan = open_in name in
+  Std.input_list (chan)
 ;;
 
   
@@ -19,19 +19,34 @@ let explode s =
   
 (*tokenise a list of strings ready for parsing*)
 let rec lexer = function
-  | (('a' :: t), "Lambd", list) -> lexer (t, "", (Lambda :: list))
-  | (('.' :: t), string, list)  -> lexer (t, "", (Dot :: Var(string) :: list))
-  | (('(' :: t), string, list)  -> lexer (t, "", (LPar :: Var(string) :: list))
-  | ((')' :: t), string, list)  -> lexer (t, "", (RPar :: Var(string) :: list))
-  | ((' ' :: t), string, list)  -> lexer (t, "", (Var(string) :: list))
-  | ([], "", list)              -> list
-  | ([], string, list)          -> Var(string) :: list
-  | ((h :: t), string, list)    -> lexer (t, (String.make 1 h) ^ string, list)
+  | (('a' :: t), "lambd") -> Lambda :: (lexer (t, ""))
+  | (('.' :: t), "")      -> Dot :: (lexer (t, ""))
+  | (('(' :: t), "")      -> LPar :: (lexer (t, ""))
+  | ((')' :: t), "")      -> RPar :: (lexer (t, ""))
+  | ((' ' :: t), "")      -> lexer (t, "")
+  | ([], "")              -> []
+  | (('.' :: t), string)  -> Var(string) :: Dot :: (lexer (t, ""))
+  | (('(' :: t), string)  -> Var(string) :: LPar :: (lexer (t, ""))
+  | ((')' :: t), string)  -> Var(string) :: RPar :: (lexer (t, ""))
+  | ((' ' :: t), string)  -> Var(string) :: (lexer (t, ""))
+  | ([], string)          -> [Var(string)]
+  | ((h :: t), string)    -> lexer (t, string ^ (String.make 1 h))
 ;;
 
-  
-(*open "lambda" as string by concatening the string list from read*)
+
+let printToken token =
+  match token with
+  | Lambda       -> Printf.printf "Lambda\n"
+  | Dot          -> Printf.printf "Dot\n"
+  | LPar         -> Printf.printf "LPar\n"
+  | RPar         -> Printf.printf "RPar\n"
+  | Var (string) -> Printf.printf "%s\n" string
+;;
+
+
+(*open "lambda", as char list, then tokenise*)
 let file = read "lambda";;
 let file = String.concat "" file;;
 let file = explode file;;
-let tokens = lexer (file, "", []);;
+let tokens = lexer (file, "");;
+List.map printToken tokens;;
